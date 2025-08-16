@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Promisent Bank | Online Banking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+    <div class="text-center">
+      <div class="animate-spin h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+      <h2 class="text-xl font-bold text-gray-700">Welcome to Promisent Bank...</h2>
+      <p class="text-gray-500 mt-2">Please wait while we set things up</p>
+    </div>
+  </div>
+
+  <!-- Login Page -->
+  <div id="login-page" class="min-h-screen flex items-center justify-center bg-gray-50">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+      <h1 class="text-2xl font-bold text-center text-blue-700 mb-6">Promisent Bank</h1>
+      <form id="login-form">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Email Address</label>
+          <input type="email" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Password</label>
+          <input type="password" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <button type="submit" class="w-full gradient-bg text-white py-2 rounded-lg font-semibold hover:opacity-90 transition">Login</button>
+      </form>
+      <p class="text-center text-sm text-gray-600 mt-4">
+        Don’t have an account? <a href="#" id="show-signup" class="text-blue-600 hover:underline">Sign up</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Signup Page -->
+  <div id="signup-page" class="hidden min-h-screen flex items-center justify-center bg-gray-50">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+      <h1 class="text-2xl font-bold text-center text-blue-700 mb-6">Promisent Bank</h1>
+      <form id="signup-form">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Full Name</label>
+          <input type="text" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Adewale Akinyemi" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Email Address</label>
+          <input type="email" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="adewale@example.com" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Phone Number</label>
+          <input type="tel" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="08012345678" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Password</label>
+          <input type="password" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <button type="submit" class="w-full gradient-bg text-white py-2 rounded-lg font-semibold hover:opacity-90 transition">Create Account</button>
+      </form>
+      <p class="text-center text-sm text-gray-600 mt-4">
+        Already have an account? <a href="#" id="show-login" class="text-blue-600 hover:underline">Login</a>
+      </p>
+    </div>
+  </div>
+  <!-- Dashboard Page -->
+  <div id="dashboard-page" class="hidden min-h-screen bg-gray-100">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-md">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-university text-2xl mr-2"></i>
+          <h1 class="text-xl font-bold">Promisent Bank</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+          <i class="fas fa-bell cursor-pointer"></i>
+          <div class="flex items-center space-x-2 cursor-pointer" id="user-menu">
+            <div class="h-8 w-8 rounded-full bg-blue-200 flex items-center justify-center">
+              <i class="fas fa-user text-blue-800"></i>
+            </div>
+            <span class="font-medium">Adewale</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- User Dropdown -->
+    <div id="user-dropdown" class="hidden absolute right-4 mt-2 w-48 bg-white rounded-md shadow-lg z-40">
+      <div class="py-1">
+        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-user mr-2"></i> Profile</a>
+        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-cog mr-2"></i> Settings</a>
+        <div class="border-t"></div>
+        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+
+      <!-- Account Summary -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-blue-50 rounded-lg p-6">
+          <p class="text-gray-600">Available Balance</p>
+          <p class="text-3xl font-bold mt-2">₦1,234,567.89</p>
+          <p class="text-sm text-gray-500 mt-1">Primary Account ••••7890</p>
+        </div>
+        <div class="bg-green-50 rounded-lg p-6">
+          <p class="text-gray-600">Savings Balance</p>
+          <p class="text-3xl font-bold mt-2">₦865,432.10</p>
+          <p class="text-sm text-gray-500 mt-1">Savings Account ••••3456</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <button id="quick-transfer" class="flex flex-col items-center p-4 border rounded-lg hover:bg-blue-50 transition">
+            <div class="h-12 w-12 gradient-bg rounded-full flex items-center justify-center text-white mb-2">
+              <i class="fas fa-exchange-alt"></i>
+            </div>
+            <span class="text-sm font-medium">Transfer</span>
+          </button>
+          <button id="quick-airtime" class="flex flex-col items-center p-4 border rounded-lg hover:bg-blue-50 transition">
+            <div class="h-12 w-12 gradient-bg rounded-full flex items-center justify-center text-white mb-2">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <span class="text-sm font-medium">Airtime</span>
+          </button>
+          <button id="quick-bill" class="flex flex-col items-center p-4 border rounded-lg hover:bg-blue-50 transition">
+            <div class="h-12 w-12 gradient-bg rounded-full flex items-center justify-center text-white mb-2">
+              <i class="fas fa-file-invoice"></i>
+            </div>
+            <span class="text-sm font-medium">Bills</span>
+          </button>
+          <button class="flex flex-col items-center p-4 border rounded-lg hover:bg-blue-50 transition">
+            <div class="h-12 w-12 gradient-bg rounded-full flex items-center justify-center text-white mb-2">
+              <i class="fas fa-qrcode"></i>
+            </div>
+            <span class="text-sm font-medium">QR Pay</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-800">Recent Transactions</h2>
+          <a href="#" class="text-blue-600 hover:underline text-sm">View All</a>
+        </div>
+        <div class="space-y-4">
+          <div class="transaction-card bg-white border rounded-lg p-4 flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="h-10 w-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 mr-3">
+                <i class="fas fa-shopping-bag"></i>
+              </div>
+              <div>
+                <p class="font-medium">Jumia Order</p>
+                <p class="text-sm text-gray-500">14/08/2023</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-medium text-red-500">-₦25,000</p>
+              <p class="text-sm text-gray-500">Completed</p>
+            </div>
+          </div>
+          <div class="transaction-card bg-white border rounded-lg p-4 flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-3">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <div>
+                <p class="font-medium">NEPA Bill Payment</p>
+                <p class="text-sm text-gray-500">12/08/2023</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-medium text-red-500">-₦18,500</p>
+              <p class="text-sm text-gray-500">Completed</p>
+            </div>
+          </div>
+          <div class="transaction-card bg-white border rounded-lg p-4 flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <div>
+                <p class="font-medium">Airtel Recharge</p>
+                <p class="text-sm text-gray-500">11/08/2023</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-medium text-red-500">-₦1,000</p>
+              <p class="text-sm text-gray-500">Successful</p>
+            </div>
+          </div>
+          <div class="transaction-card bg-white border rounded-lg p-4 flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mr-3">
+                <i class="fas fa-utensils"></i>
+              </div>
+              <div>
+                <p class="font-medium">KFC Nigeria</p>
+                <p class="text-sm text-gray-500">10/08/2023</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-medium text-red-500">-₦5,200</p>
+              <p class="text-sm text-gray-500">Completed</p>
+            </div>
+          </div>
+          <div class="transaction-card bg-white border rounded-lg p-4 flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 mr-3">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div>
+                <p class="font-medium">POS Withdrawal</p>
+                <p class="text-sm text-gray-500">09/08/2023</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-medium text-red-500">-₦15,000</p>
+              <p class="text-sm text-gray-500">Successful</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <!-- Transfer Modal -->
+  <div id="transfer-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Transfer Funds</h2>
+      <form id="transfer-form">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Recipient Bank</label>
+          <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Bank</option>
+            <option value="gtbank">GTBank</option>
+            <option value="zenith">Zenith Bank</option>
+            <option value="first">First Bank</option>
+            <option value="access">Access Bank</option>
+            <option value="uba">UBA</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Account Number</label>
+          <input type="text" maxlength="10" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="0123456789" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Amount (₦)</label>
+          <input type="number" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+        </div>
+        <button type="submit" class="w-full gradient-bg text-white py-2 rounded-lg font-semibold">Send Money</button>
+      </form>
+      <button id="close-transfer" class="mt-4 w-full border py-2 rounded-lg text-gray-600 hover:bg-gray-100">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Airtime Modal -->
+  <div id="airtime-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Buy Airtime</h2>
+      <form id="airtime-form">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Network</label>
+          <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Network</option>
+            <option value="mtn">MTN</option>
+            <option value="airtel">Airtel</option>
+            <option value="glo">Glo</option>
+            <option value="9mobile">9mobile</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Phone Number</label>
+          <input type="tel" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="08012345678" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Amount (₦)</label>
+          <input type="number" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+        </div>
+        <button type="submit" class="w-full gradient-bg text-white py-2 rounded-lg font-semibold">Buy Airtime</button>
+      </form>
+      <button id="close-airtime" class="mt-4 w-full border py-2 rounded-lg text-gray-600 hover:bg-gray-100">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Bills Modal -->
+  <div id="bill-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Pay Bills</h2>
+      <form id="bill-form">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Biller</label>
+          <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Biller</option>
+            <option value="nepa">NEPA Electricity</option>
+            <option value="dstv">DSTV</option>
+            <option value="gotv">GOTV</option>
+            <option value="startimes">StarTimes</option>
+            <option value="waec">WAEC</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Customer ID</label>
+          <input type="text" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter Customer Number" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Amount (₦)</label>
+          <input type="number" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+        </div>
+        <button type="submit" class="w-full gradient-bg text-white py-2 rounded-lg font-semibold">Pay Bill</button>
+      </form>
+      <button id="close-bill" class="mt-4 w-full border py-2 rounded-lg text-gray-600 hover:bg-gray-100">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Profile Settings</h2>
+      <form>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Full Name</label>
+          <input type="text" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" value="Adewale Akinyemi">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Phone</label>
+          <input type="tel" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" value="08023456789">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Email</label>
+          <input type="email" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" value="adewale@example.com">
+        </div>
+        <button type="button" class="w-full gradient-bg text-white py-2 rounded-lg font-semibold">Save Changes</button>
+      </form>
+      <button id="close-settings" class="mt-4 w-full border py-2 rounded-lg text-gray-600 hover:bg-gray-100">Close</button>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6 mt-8">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-400 text-sm">© 2023 Promisent Bank. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Loading Screen
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading-screen").style.display = "none";
+      }, 1500);
+    });
+
+    // Switch login/signup
+    const loginPage = document.getElementById("login-page");
+    const signupPage = document.getElementById("signup-page");
+    document.getElementById("show-signup").onclick = () => {
+      loginPage.classList.add("hidden");
+      signupPage.classList.remove("hidden");
+    };
+    document.getElementById("show-login").onclick = () => {
+      signupPage.classList.add("hidden");
+      loginPage.classList.remove("hidden");
+    };
+
+    // Login form (mock)
+    document.getElementById("login-form").onsubmit = (e) => {
+      e.preventDefault();
+      loginPage.classList.add("hidden");
+      document.getElementById("dashboard-page").classList.remove("hidden");
+    };
+
+    // Signup form (mock)
+    document.getElementById("signup-form").onsubmit = (e) => {
+      e.preventDefault();
+      signupPage.classList.add("hidden");
+      document.getElementById("dashboard-page").classList.remove("hidden");
+    };
+
+    // User menu dropdown
+    const userMenu = document.getElementById("user-menu");
+    const userDropdown = document.getElementById("user-dropdown");
+    userMenu.addEventListener("click", () => {
+      userDropdown.classList.toggle("hidden");
+    });
+
+    // Modals
+    const transferModal = document.getElementById("transfer-modal");
+    const airtimeModal = document.getElementById("airtime-modal");
+    const billModal = document.getElementById("bill-modal");
+    const settingsModal = document.getElementById("settings-modal");
+
+    document.getElementById("quick-transfer").onclick = () => transferModal.classList.remove("hidden");
+    document.getElementById("quick-airtime").onclick = () => airtimeModal.classList.remove("hidden");
+    document.getElementById("quick-bill").onclick = () => billModal.classList.remove("hidden");
+
+    document.getElementById("close-transfer").onclick = () => transferModal.classList.add("hidden");
+    document.getElementById("close-airtime").onclick = () => airtimeModal.classList.add("hidden");
+    document.getElementById("close-bill").onclick = () => billModal.classList.add("hidden");
+    document.getElementById("close-settings").onclick = () => settingsModal.classList.add("hidden");
+  </script>
+
+</body>
+</html>
